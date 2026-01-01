@@ -1,3 +1,3 @@
 chroma_db
 *pycache*
-rag_pipeline/src/__pycache__
+rag_pipeline/src/__pycache__*
