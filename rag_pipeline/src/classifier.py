@@ -28,7 +28,7 @@ class FileClassifier:
             metadata["file_type"] = "container_runtime"
             metadata["authority"] = "high"
             metadata["execution_risk"] = "critical"
-        elif ".github/workflows" in file_path and filename.endswith(".yml"):
+        elif ".github/workflows" in file_path and (filename.endswith(".yml") or filename.endswith(".yaml")):
             metadata["file_type"] = "ci_pipeline"
             metadata["authority"] = "critical"
             metadata["execution_risk"] = "critical"
