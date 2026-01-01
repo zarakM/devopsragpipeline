@@ -1,0 +1,39 @@
+name: Payment Service CD
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'rag_data_source/aspnet-payments/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./rag_data_source/aspnet-payments
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Build and Test
+      run: |
+        dotnet restore ./Payments.Service/Payments.Service.csproj
+        dotnet build ./Payments.Service/Payments.Service.csproj --configuration Release
+        dotnet test ./Payments.Service/Payments.Service.csproj
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build Docker Image
+      run: docker build . -t myregistry.azurecr.io/payment-service:${{ github.sha }}
+
+    - name: Push to Azure Container Registry
+      run: docker push myregistry.azurecr.io/payment-service:${{ github.sha }}

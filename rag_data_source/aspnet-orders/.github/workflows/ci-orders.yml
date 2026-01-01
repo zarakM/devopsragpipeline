@@ -1,0 +1,43 @@
+name: Order Service CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'rag_data_source/aspnet-orders/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'rag_data_source/aspnet-orders/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./rag_data_source/aspnet-orders
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore ./Orders.Service/Orders.Service.csproj
+
+    - name: Build
+      run: dotnet build ./Orders.Service/Orders.Service.csproj --no-restore
+
+    - name: Test
+      run: dotnet test ./Orders.Service/Orders.Service.csproj --no-build --verbosity normal
+
+    - name: Push to Docker Hub
+      if: github.event_name == 'push'
+      uses: docker/build-push-action@v5
+      with:
+        context: ./rag_data_source/aspnet-orders
+        push: false
+        tags: user/orders-service:latest
