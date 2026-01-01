@@ -5,6 +5,7 @@ from src.classifier import FileClassifier
 from src.chunkers.docker import DockerfileChunker
 from src.chunkers.github import GitHubActionsChunker
 from src.chunkers.terraform import TerraformChunker
+from src.vector_store import VectorStore
 
 # Configuration
 DATA_SOURCE = "rag_data_source"
@@ -74,10 +75,8 @@ def main():
         for file in files:
             file_path = os.path.join(root, file)
             
-            # Skip hidden files or unrelated items if needed
-            if file.startswith("."): # except .github is a dir, but files might be .something
-                 # Actually .github/workflows/*.yml matches logic, but .gitignore etc might not
-                 # logic handles unknown types gracefully
+            # Skip hidden files
+            if file.startswith("."): 
                  pass
 
             logging.info(f"Processing {file_path}...")
@@ -89,7 +88,21 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(all_chunks, f, indent=2)
     
-    logging.info(f"Pipeline complete. {len(all_chunks)} total chunks saved to {OUTPUT_FILE}")
+    logging.info(f"Chunking complete. {len(all_chunks)} chunks saved to {OUTPUT_FILE}")
+
+    # Vector DB Indexing
+    logging.info("Starting Vector DB Indexing...")
+    try:
+        store = VectorStore(collection_name="rag_pipeline")
+        
+        if not store.embedding_function:
+            logging.warning("Skipping indexing: OpenAI API Key not found.")
+        else:
+            store.upsert(all_chunks)
+            logging.info("Indexing complete.")
+            
+    except Exception as e:
+        logging.error(f"Indexing failed: {e}")
 
 if __name__ == "__main__":
     main()

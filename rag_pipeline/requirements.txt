@@ -1,2 +1,3 @@
-pyyaml
 python-hcl2
+chromadb
+openai
