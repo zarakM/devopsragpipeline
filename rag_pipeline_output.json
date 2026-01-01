@@ -1,0 +1,838 @@
+[
+  {
+    "content": "FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "FROM",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "WORKDIR /src",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "COPY [\"Orders.Service/Orders.Service.csproj\", \"Orders.Service/\"]",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "COPY",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "RUN dotnet restore \"Orders.Service/Orders.Service.csproj\"",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "RUN",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "COPY . .",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "COPY",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "WORKDIR \"/src/Orders.Service\"",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "RUN dotnet build \"Orders.Service.csproj\" -c Release -o /app/build",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "RUN",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:8.0"
+    }
+  },
+  {
+    "content": "FROM build AS publish",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "FROM",
+      "docker_stage": "publish",
+      "base_image": "build"
+    }
+  },
+  {
+    "content": "RUN dotnet publish \"Orders.Service.csproj\" -c Release -o /app/publish /p:UseAppHost=false",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "RUN",
+      "docker_stage": "publish",
+      "base_image": "build"
+    }
+  },
+  {
+    "content": "FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "FROM",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  },
+  {
+    "content": "WORKDIR /app",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  },
+  {
+    "content": "EXPOSE 80",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "EXPOSE",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  },
+  {
+    "content": "EXPOSE 443",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "EXPOSE",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  },
+  {
+    "content": "COPY --from=publish /app/publish .",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "COPY",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  },
+  {
+    "content": "ENTRYPOINT [\"dotnet\", \"Orders.Service.dll\"]",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "instruction_type": "ENTRYPOINT",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:8.0"
+    }
+  },
+  {
+    "content": "build:\n  runs-on: ubuntu-latest\n  defaults:\n    run:\n      working-directory: ./rag_data_source/aspnet-orders\n  steps:\n  - uses: actions/checkout@v4\n  - name: Setup .NET\n    uses: actions/setup-dotnet@v4\n    with:\n      dotnet-version: 8.0.x\n  - name: Restore dependencies\n    run: dotnet restore ./Orders.Service/Orders.Service.csproj\n  - name: Build\n    run: dotnet build ./Orders.Service/Orders.Service.csproj --no-restore\n  - name: Test\n    run: dotnet test ./Orders.Service/Orders.Service.csproj --no-build --verbosity\n      normal\n  - name: Push to Docker Hub\n    if: github.event_name == 'push'\n    uses: docker/build-push-action@v5\n    with:\n      context: ./rag_data_source/aspnet-orders\n      push: false\n      tags: user/orders-service:latest\n",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-orders/.github/workflows/ci-orders.yml",
+      "file_type": "ci_pipeline",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-orders",
+      "workflow_name": "Order Service CI",
+      "triggers": [],
+      "job_name": "build",
+      "runs_on": "ubuntu-latest",
+      "chunk_type": "ci_job"
+    }
+  },
+  {
+    "content": "FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "FROM",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "WORKDIR /src",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "COPY [\"Payments.Service/Payments.Service.csproj\", \"Payments.Service/\"]",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "COPY",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "RUN dotnet restore \"Payments.Service/Payments.Service.csproj\"",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "RUN",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "COPY . .",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "COPY",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "WORKDIR \"/src/Payments.Service\"",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "RUN dotnet build \"Payments.Service.csproj\" -c Release -o /app/build",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "RUN",
+      "docker_stage": "build",
+      "base_image": "mcr.microsoft.com/dotnet/sdk:6.0"
+    }
+  },
+  {
+    "content": "FROM build AS publish",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "FROM",
+      "docker_stage": "publish",
+      "base_image": "build"
+    }
+  },
+  {
+    "content": "RUN dotnet publish \"Payments.Service.csproj\" -c Release -o /app/publish",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "RUN",
+      "docker_stage": "publish",
+      "base_image": "build"
+    }
+  },
+  {
+    "content": "FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "FROM",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:6.0"
+    }
+  },
+  {
+    "content": "WORKDIR /app",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:6.0"
+    }
+  },
+  {
+    "content": "EXPOSE 80",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "EXPOSE",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:6.0"
+    }
+  },
+  {
+    "content": "COPY --from=publish /app/publish .",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "COPY",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:6.0"
+    }
+  },
+  {
+    "content": "ENTRYPOINT [\"dotnet\", \"Payments.Service.dll\"]",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "instruction_type": "ENTRYPOINT",
+      "docker_stage": "final",
+      "base_image": "mcr.microsoft.com/dotnet/aspnet:6.0"
+    }
+  },
+  {
+    "content": "deploy:\n  runs-on: ubuntu-latest\n  defaults:\n    run:\n      working-directory: ./rag_data_source/aspnet-payments\n  steps:\n  - uses: actions/checkout@v4\n  - name: Setup .NET Core\n    uses: actions/setup-dotnet@v4\n    with:\n      dotnet-version: 6.0.x\n  - name: Build and Test\n    run: 'dotnet restore ./Payments.Service/Payments.Service.csproj\n\n      dotnet build ./Payments.Service/Payments.Service.csproj --configuration Release\n\n      dotnet test ./Payments.Service/Payments.Service.csproj\n\n      '\n  - name: Login to Azure\n    uses: azure/login@v1\n    with:\n      creds: ${{ secrets.AZURE_CREDENTIALS }}\n  - name: Build Docker Image\n    run: docker build . -t myregistry.azurecr.io/payment-service:${{ github.sha }}\n  - name: Push to Azure Container Registry\n    run: docker push myregistry.azurecr.io/payment-service:${{ github.sha }}\n",
+    "metadata": {
+      "file_path": "rag_data_source/aspnet-payments/.github/workflows/ci-payments.yml",
+      "file_type": "ci_pipeline",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "aspnet-payments",
+      "workflow_name": "Payment Service CD",
+      "triggers": [],
+      "job_name": "deploy",
+      "runs_on": "ubuntu-latest",
+      "chunk_type": "ci_job"
+    }
+  },
+  {
+    "content": "FROM python:3.9-alpine",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "FROM",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "WORKDIR /app",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "COPY requirements.txt .",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "COPY",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "RUN pip install --no-cache-dir -r requirements.txt",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "RUN",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "COPY . .",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "COPY",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "ENV FLASK_APP=app.py",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "ENV",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "ENV FLASK_ENV=production",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "ENV",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "EXPOSE 5000",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "EXPOSE",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "CMD [\"gunicorn\", \"--bind\", \"0.0.0.0:5000\", \"app:app\"]",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "instruction_type": "CMD",
+      "docker_stage": "final",
+      "base_image": "python:3.9-alpine"
+    }
+  },
+  {
+    "content": "security-and-test:\n  runs-on: ubuntu-latest\n  defaults:\n    run:\n      working-directory: ./rag_data_source/python-inventory\n  steps:\n  - uses: actions/checkout@v4\n  - name: Set up Python\n    uses: actions/setup-python@v5\n    with:\n      python-version: '3.9'\n  - name: Install dependencies\n    run: 'python -m pip install --upgrade pip\n\n      pip install -r requirements.txt\n\n      pip install safety flake8 pytest\n\n      '\n  - name: Safety Check\n    run: safety check\n  - name: Lint with flake8\n    run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics\n  - name: Run tests\n    run: pytest\n  - name: Docker Build\n    run: docker build . -t inventory-service:latest\n",
+    "metadata": {
+      "file_path": "rag_data_source/python-inventory/.github/workflows/ci-inventory.yml",
+      "file_type": "ci_pipeline",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-inventory",
+      "workflow_name": "Inventory Service CI",
+      "triggers": [],
+      "job_name": "security-and-test",
+      "runs_on": "ubuntu-latest",
+      "chunk_type": "ci_job"
+    }
+  },
+  {
+    "content": "FROM python:3.11-slim",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "FROM",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "WORKDIR /app",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "WORKDIR",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "COPY requirements.txt .",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "COPY",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "RUN pip install --no-cache-dir -r requirements.txt",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "RUN",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "COPY . .",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "COPY",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "EXPOSE 8000",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "EXPOSE",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "CMD [\"uvicorn\", \"main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/Dockerfile",
+      "file_type": "container_runtime",
+      "authority": "high",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "instruction_type": "CMD",
+      "docker_stage": "final",
+      "base_image": "python:3.11-slim"
+    }
+  },
+  {
+    "content": "test-and-lint:\n  runs-on: ubuntu-latest\n  defaults:\n    run:\n      working-directory: ./rag_data_source/python-users\n  steps:\n  - uses: actions/checkout@v4\n  - name: Set up Python\n    uses: actions/setup-python@v5\n    with:\n      python-version: '3.11'\n  - name: Install dependencies\n    run: 'python -m pip install --upgrade pip\n\n      pip install -r requirements.txt\n\n      pip install pytest black\n\n      '\n  - name: Lint with Black\n    run: black --check .\n  - name: Run tests\n    run: pytest\n",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/.github/workflows/ci-users.yml",
+      "file_type": "ci_pipeline",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "workflow_name": "User Service CI",
+      "triggers": [],
+      "job_name": "test-and-lint",
+      "runs_on": "ubuntu-latest",
+      "chunk_type": "ci_job"
+    }
+  },
+  {
+    "content": "build-image:\n  needs: test-and-lint\n  runs-on: ubuntu-latest\n  steps:\n  - uses: actions/checkout@v4\n  - name: Build Docker image\n    run: docker build ./rag_data_source/python-users -t user-service:test\n",
+    "metadata": {
+      "file_path": "rag_data_source/python-users/.github/workflows/ci-users.yml",
+      "file_type": "ci_pipeline",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "python-users",
+      "workflow_name": "User Service CI",
+      "triggers": [],
+      "job_name": "build-image",
+      "runs_on": "ubuntu-latest",
+      "chunk_type": "ci_job"
+    }
+  },
+  {
+    "content": "output \"cluster_endpoint\" {\n  \"description\": \"Endpoint for EKS control plane\",\n  \"value\": \"${module.eks.cluster_endpoint}\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/outputs.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "output",
+      "chunk_type": "terraform_block",
+      "name": "cluster_endpoint"
+    }
+  },
+  {
+    "content": "output \"cluster_security_group_id\" {\n  \"description\": \"Security group ids attached to the cluster control plane\",\n  \"value\": \"${module.eks.cluster_security_group_id}\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/outputs.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "output",
+      "chunk_type": "terraform_block",
+      "name": "cluster_security_group_id"
+    }
+  },
+  {
+    "content": "output \"region\" {\n  \"description\": \"AWS region\",\n  \"value\": \"${var.region}\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/outputs.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "output",
+      "chunk_type": "terraform_block",
+      "name": "region"
+    }
+  },
+  {
+    "content": "output \"cluster_name\" {\n  \"description\": \"Kubernetes Cluster Name\",\n  \"value\": \"${module.eks.cluster_name}\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/outputs.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "output",
+      "chunk_type": "terraform_block",
+      "name": "cluster_name"
+    }
+  },
+  {
+    "content": "module \"vpc\" {\n  \"source\": \"terraform-aws-modules/vpc/aws\",\n  \"version\": \"5.0.0\",\n  \"name\": \"${var.cluster_name}-vpc\",\n  \"cidr\": \"10.0.0.0/16\",\n  \"azs\": [\n    \"${var.region}a\",\n    \"${var.region}b\",\n    \"${var.region}c\"\n  ],\n  \"private_subnets\": [\n    \"10.0.1.0/24\",\n    \"10.0.2.0/24\",\n    \"10.0.3.0/24\"\n  ],\n  \"public_subnets\": [\n    \"10.0.101.0/24\",\n    \"10.0.102.0/24\",\n    \"10.0.103.0/24\"\n  ],\n  \"enable_nat_gateway\": true\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/main.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "module",
+      "chunk_type": "terraform_block",
+      "name": "vpc"
+    }
+  },
+  {
+    "content": "module \"eks\" {\n  \"source\": \"terraform-aws-modules/eks/aws\",\n  \"version\": \"19.15.3\",\n  \"cluster_name\": \"${var.cluster_name}\",\n  \"cluster_version\": \"1.27\",\n  \"vpc_id\": \"${module.vpc.vpc_id}\",\n  \"subnet_ids\": \"${module.vpc.private_subnets}\",\n  \"cluster_endpoint_public_access\": true,\n  \"eks_managed_node_groups\": {\n    \"default\": {\n      \"min_size\": 1,\n      \"max_size\": 3,\n      \"desired_size\": 2,\n      \"instance_types\": [\n        \"t3.medium\"\n      ]\n    }\n  }\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/main.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "module",
+      "chunk_type": "terraform_block",
+      "name": "eks"
+    }
+  },
+  {
+    "content": "provider \"aws\" {\n  \"region\": \"${var.region}\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/main.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "provider",
+      "chunk_type": "terraform_block",
+      "name": "aws"
+    }
+  },
+  {
+    "content": "variable \"region\" {\n  \"description\": \"AWS region\",\n  \"type\": \"string\",\n  \"default\": \"us-west-2\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/variables.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "variable",
+      "chunk_type": "terraform_block",
+      "name": "region"
+    }
+  },
+  {
+    "content": "variable \"cluster_name\" {\n  \"description\": \"Name of the EKS cluster\",\n  \"type\": \"string\",\n  \"default\": \"rag-pipeline-cluster\"\n}",
+    "metadata": {
+      "file_path": "rag_data_source/terraform-eks/variables.tf",
+      "file_type": "infra_iac",
+      "authority": "critical",
+      "execution_risk": "critical",
+      "environment": "unknown",
+      "service": "terraform-eks",
+      "block_type": "variable",
+      "chunk_type": "terraform_block",
+      "name": "cluster_name"
+    }
+  }
+]
